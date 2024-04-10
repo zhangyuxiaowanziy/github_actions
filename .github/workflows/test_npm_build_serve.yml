@@ -12,7 +12,7 @@ jobs:
     # 添加容器服务配置（这里以Docker为例）
     services:
       web_server:
-        image: docusaurus_docker_image
+        image: your_docker_image_name
         ports:
           - 3000:3000 # 假设应用监听3000端口
 
@@ -34,8 +34,8 @@ jobs:
     - name: Serve the application in a Docker container
       run: |
         # 这里假设你有一个Dockerfile可以构建镜像并启动应用
-        docker build -t docusaurus_docker_image .
-        docker run -d --name web_server_instance -p 3000:3000 docusaurus_docker_image npm run serve
+        docker build -t your_docker_image_name .
+        docker run -d --name web_server_instance -p 3000:3000 your_docker_image_name npm run serve
 
     # 可选步骤：如果需要等待服务完全启动后才继续后续操作
     - name: Wait for the server to start
