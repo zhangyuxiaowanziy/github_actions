@@ -1,0 +1,45 @@
+name: test_npm_build_serve
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
+
+jobs:
+  test_npm_build_serve:
+    runs-on: ubuntu-latest
+    # 添加容器服务配置（这里以Docker为例）
+    services:
+      web_server:
+        image: docusaurus_docker_image
+        ports:
+          - 3000:3000 # 假设应用监听3000端口
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4.0.2
+      with:
+        node-version: 'latest'
+
+    - name: Install install
+      run: npm install
+
+    - name: Build the website
+      run: npm run build
+
+    - name: Serve the application in a Docker container
+      run: |
+        # 这里假设你有一个Dockerfile可以构建镜像并启动应用
+        docker build -t docusaurus_docker_image .
+        docker run -d --name web_server_instance -p 3000:3000 docusaurus_docker_image npm run serve
+
+    # 可选步骤：如果需要等待服务完全启动后才继续后续操作
+    - name: Wait for the server to start
+      run: docker wait web_server_instance
+      shell: bash
+
+    # 可能的额外步骤：例如运行测试、验证服务可用性等
