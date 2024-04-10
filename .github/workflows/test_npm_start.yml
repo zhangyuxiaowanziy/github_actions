@@ -2,9 +2,9 @@ name: test_npm_start
 
 on:		
   push:
-    branches: [ "develop" ]	
+    branches: [ "develo" ]	
   pull_request:
-    branches: [ "develop" ]
+    branches: [ "develo" ]
 
 jobs:
   test_npm_start:
