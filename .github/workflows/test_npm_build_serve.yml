@@ -23,10 +23,7 @@ jobs:
         npm install
         npm run build
 
-    - name: deploy
-      uses: JamesIves/github-pages-deploy-action@releases/v3
-      env: 
-        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        BRANCH: gh-pages
-        FOLDER: build
-        BUILD_SCRIPT_PATH: npm run build
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: build # The folder the action should deploy.
