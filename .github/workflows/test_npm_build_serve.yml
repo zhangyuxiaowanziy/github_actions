@@ -2,13 +2,13 @@ name: Deploy Arden Github pages
 on:
   push:
     branches:
-      - main
+      - develop
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@main
+      uses: actions/checkout@develop
       with:
         persist-credentials: false
     - name: Install and Build
