@@ -1,24 +1,28 @@
-name: Deploy Arden Github pages
+name: test_npm_build_serve
+
 on:
   push:
-    branches:
+    branches: 
       - develop
+
 jobs:
-  build-and-deploy:
+  test_npm_build_serve:
     runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout
-      uses: actions/checkout@main
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4.0.2
       with:
-        persist-credentials: false
-    - name: Install and Build
+        node-version: 'latest'
+
+    - name: Install and build
       run: |
         npm install
-        npm run-script build 
+        npm run build
     - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@releases/v3
+      uses: JamesIves/github-pages-deploy-action@v4
       with:
-        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        BRANCH: gh-pages
-        FOLDER: build
-        BUILD_SCRIPT: npm install && npm run build
+        folder: build
