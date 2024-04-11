@@ -2,19 +2,12 @@ name: test_npm_build_serve
 
 on:
   push:
-    branches: [ "develop" ]
-  pull_request:
-    branches: [ "develop" ]
+    branches: 
+      - develop
 
 jobs:
   test_npm_build_serve:
     runs-on: ubuntu-latest
-    # 添加容器服务配置（这里以Docker为例）
-    services:
-      web_server:
-        image: your_docker_image_name
-        ports:
-          - 3000:3000 # 假设应用监听3000端口
 
     steps:
     - name: Checkout repository
@@ -25,21 +18,15 @@ jobs:
       with:
         node-version: 'latest'
 
-    - name: Install install
-      run: npm install
-
-    - name: Build the website
-      run: npm run build
-
-    - name: Serve the application in a Docker container
+    - name: Install and build
       run: |
-        # 这里假设你有一个Dockerfile可以构建镜像并启动应用
-        docker build -t your_docker_image_name .
-        docker run -d --name web_server_instance -p 3000:3000 your_docker_image_name npm run serve
+        npm install
+        npm run build
 
-    # 可选步骤：如果需要等待服务完全启动后才继续后续操作
-    - name: Wait for the server to start
-      run: docker wait web_server_instance
-      shell: bash
-
-    # 可能的额外步骤：例如运行测试、验证服务可用性等
+    - name: deploy
+      uses: JamesIves/github-pages-deploy-action@releases/v3
+      env: 
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: build
+        BUILD_SCRIPT_PATH: npm run build
