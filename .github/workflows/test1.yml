@@ -1,8 +1,10 @@
 name: test_1
 on:
   push:
-    tags:
-      - '*'
+    branches:
+      - main
+#    tags:
+#      - '*'
 
 jobs:
   build-docs:
