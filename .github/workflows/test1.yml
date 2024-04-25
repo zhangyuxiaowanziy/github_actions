@@ -1,20 +1,17 @@
-name: test_1
+name: test1
 on:
   push:
     branches:
       - main
-#    tags:
-#      - '*'
 
 jobs:
   build-docs:
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Checkout repository
+      - name: Check out repository code
         uses: actions/checkout@v4
         
-      - name: Install npm
+      - name: Install package
         run: npm install
         
       - name: Build website
@@ -22,14 +19,14 @@ jobs:
         
       - name: Depoly to server
         uses: up9cloud/action-rsync@v1.4
-        with:
-          switches: -arH
-          path: ./
-          remote_host: ${{ vars.SERVER_IP }}
-          remote_port: ${{ vars.SERVER_PORT }}
-          remote_user: ${{ vars.SERVER_USERNAME }}
-          remote_path: ${{ vars.SERVER_DESTINATION }}
-          remote_key: ${{ secrets.SERVER_SSH_KEY }}
+        env:
+          ARGES_MORE: -arH
+          SOURCE: ./
+          HOST: ${{ vars.SERVER_IP }}
+          PORT: ${{ vars.SERVER_PORT }}
+          USER: ${{ vars.SERVER_USERNAME }}
+          TARGET: ${{ vars.SERVER_DESTINATION }}
+          KEY: ${{ secrets.SERVER_SSH_KEY }}
           
       - name: Restart server service
         uses: tiyee/action-ssh@v1.0.1
@@ -37,8 +34,8 @@ jobs:
           host: ${{ vars.SERVER_IP }}
           username: ${{ vars.SERVER_USERNAME }}
           port: ${{ vars.SERVER_PORT }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          script: |
+          privateKey: ${{ secrets.SERVER_SSH_KEY }}
+          command: |
             sudo systemctl stop ${{ vars.SERVER_SERVICE_NAME }}
             rm -rf ${{ vars.SERVER_SERVICE_WORKDIR }}
             mv ${{ vars.SERVER_DESTINATION }} ${{ vars.SERVER_SERVICE_WORKDIR }}
