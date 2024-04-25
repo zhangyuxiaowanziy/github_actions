@@ -2,7 +2,7 @@ name: Deploy Arden Github pages
 on:
   push:
     branches:
-      - main
+      - ma
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
