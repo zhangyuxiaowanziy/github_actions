@@ -24,15 +24,15 @@ jobs:
           SOURCE: ./
           HOST: ${{ vars.SERVER_IP }}
           PORT: ${{ vars.SERVER_PORT }}
-          USER: ${{ vars.SERVER_USERNAME }}
-          TARGET: ${{ vars.SERVER_DESTINATION }}
+          USER: ${{ vars.SERVER_USER }}
+          TARGET: ${{ vars.SERVER_TARGET }}
           KEY: ${{ secrets.SERVER_SSH_KEY }}
           
       - name: Restart server service
         uses: tiyee/action-ssh@v1.0.1
         with:
           host: ${{ vars.SERVER_IP }}
-          username: ${{ vars.SERVER_USERNAME }}
+          username: ${{ vars.SERVER_USER }}
           port: ${{ vars.SERVER_PORT }}
           privateKey: ${{ secrets.SERVER_SSH_KEY }}
           command: |
