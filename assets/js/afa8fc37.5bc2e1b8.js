@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[662],{6411:a=>{a.exports=JSON.parse('{"label":"hola","permalink":"/zhangyuxiaowanziy/blog/tags/hola","allTagsPath":"/zhangyuxiaowanziy/blog/tags","count":1,"unlisted":false}')}}]);
